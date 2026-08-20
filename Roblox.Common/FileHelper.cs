@@ -72,8 +72,10 @@ namespace Roblox.Common
             _Pool.Post(new FileHelper());
         }
 
-        private static void Get(Port<FileHelper> result) =>
+        private static void Get(Port<FileHelper> result)
+        {
             Arbiter.Activate(_DispatcherQueue, Arbiter.Receive(false, _Pool, (h) => result.Post(h)));
+        }
 
         private static void MonitorPerformance()
         {
@@ -133,7 +135,7 @@ namespace Roblox.Common
             }
         }
 
-        public void Dispose() => AddToPool();
+        public void Dispose() { AddToPool(); }
 
         private static readonly int _DefaultPoolSize = 25;
 

@@ -48,7 +48,9 @@ namespace Roblox.ServiceModel
         }
 
         private void CurrentDomain_DomainUnload(object sender, EventArgs e)
-            => CloseChannel();
+        {
+            CloseChannel();
+        }
 
         private void CloseChannel()
         {

@@ -38,7 +38,7 @@ namespace Roblox.Common.Mime
 
     public class QuotedPrintableEncoding
     {
-        private static string HexDecoderEvaluator(Match m) => ((char)Convert.ToInt32(m.Groups[2].Value, 16)).ToString();
+        private static string HexDecoderEvaluator(Match m) { return ((char)Convert.ToInt32(m.Groups[2].Value, 16)).ToString(); }
         private static string HexDecoder(string line)
         {
             if (line == null) throw new ArgumentNullException();
@@ -102,15 +102,15 @@ namespace Roblox.Common.Mime
         private MimeReader(MimeEntity entity, Queue<string> lines)
             : this()
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-            if (lines == null) throw new ArgumentNullException(nameof(lines));
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (lines == null) throw new ArgumentNullException("lines");
             _lines = lines;
             _entity = new MimeEntity(entity);
         }
         public MimeReader(string[] lines)
             : this()
         {
-            if (lines == null) throw new ArgumentNullException(nameof(lines));
+            if (lines == null) throw new ArgumentNullException("lines");
             _lines = new Queue<string>(lines);
         }
 
@@ -301,7 +301,7 @@ namespace Roblox.Common.Mime
         public MimeEntity(MimeEntity parent)
             : this()
         {
-            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (parent == null) throw new ArgumentNullException("parent");
             _parent = parent;
             _startBoundry = parent.StartBoundry;
         }
@@ -339,10 +339,10 @@ namespace Roblox.Common.Mime
             _mediaMainType = MimeReader.GetMediaMainType(contentType.MediaType);
             _mediaSubType = MimeReader.GetMediaSubType(contentType.MediaType);
         }
-        public MailMessageEx ToMailMessageEx() => ToMailMessageEx(this);
+        public MailMessageEx ToMailMessageEx() { return ToMailMessageEx(this); }
         public MailMessageEx ToMailMessageEx(MimeEntity entity)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            if (entity == null) throw new ArgumentNullException("entity");
             var mailMessage = MailMessageEx.CreateMailMessageFromEntity(entity);
             if (!string.IsNullOrEmpty(entity.ContentType.Boundary))
             {
@@ -386,7 +386,7 @@ namespace Roblox.Common.Mime
                     message.Attachments.Add(CreateAttachment(mimeEntity));
             }
         }
-        private static bool IsAttachment(MimeEntity child) => child.ContentDisposition != null && string.Equals(child.ContentDisposition.DispositionType, "attachment", StringComparison.InvariantCultureIgnoreCase);
+        private static bool IsAttachment(MimeEntity child) { return child.ContentDisposition != null && string.Equals(child.ContentDisposition.DispositionType, "attachment", StringComparison.InvariantCultureIgnoreCase); }
         private void SetMessageBody(MailMessageEx message, MimeEntity child)
         {
             var encoding = child.GetEncoding();

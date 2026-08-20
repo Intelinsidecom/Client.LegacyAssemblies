@@ -181,15 +181,25 @@ namespace Roblox.Common
         }
 
         public static void Exists(this FileInfo fileInfo, PortSet<bool, Exception> result) 
-            => FileHelper.ExecuteTask(File.Exists, fileInfo.FullName, result);
+        {
+            FileHelper.ExecuteTask(File.Exists, fileInfo.FullName, result);
+        }
         public static void ToArray(this Stream stream, PortSet<byte[], Exception> result)
-            => CcrService.Singleton.SpawnIterator(stream, result, StreamToArrayIterator);
+        {
+            CcrService.Singleton.SpawnIterator(stream, result, StreamToArrayIterator);
+        }
         public static void ToArrayAndDispose(this Stream stream, PortSet<byte[], Exception> result) 
-            => CcrService.Singleton.SpawnIterator(stream, result, StreamToArrayAndDisposeIterator);
+        {
+            CcrService.Singleton.SpawnIterator(stream, result, StreamToArrayAndDisposeIterator);
+        }
         public static void ToString(this Stream stream, PortSet<string, Exception> result) 
-            => CcrService.Singleton.SpawnIterator(stream, result, StreamToStringIterator);
+        {
+            CcrService.Singleton.SpawnIterator(stream, result, StreamToStringIterator);
+        }
         public static void ToStringAndDispose(this Stream stream, PortSet<string, Exception> result) 
-            => CcrService.Singleton.SpawnIterator(stream, result, StreamToStringIterator);
+        {
+            CcrService.Singleton.SpawnIterator(stream, result, StreamToStringIterator);
+        }
 
         public static void WriteAsync(this Stream stream, byte[] data, Action<Result<CompletionSignal>> resultHandler)
         {
@@ -207,7 +217,7 @@ namespace Roblox.Common
                 }
                 finally
                 {
-                    stream?.Dispose();
+                    if (stream != null) stream.Dispose();
                 }
 
                 return signal;
@@ -220,13 +230,21 @@ namespace Roblox.Common
             return newEncoding.GetString(newBytes);
         }
         public static byte[] GetBytes(this string value)
-            => value.GetBytes(new ASCIIEncoding());
+        {
+            return value.GetBytes(new ASCIIEncoding());
+        }
         public static byte[] GetBytes(this string value, Encoding encoding)
-            => encoding.GetBytes(value);
+        {
+            return encoding.GetBytes(value);
+        }
         public static bool IsEven(this int value)
-            => value % 2 == 0;
+        {
+            return value % 2 == 0;
+        }
         public static bool IsOdd(this int value)
-            => !value.IsEven();
+        {
+            return !value.IsEven();
+        }
 
         public static int[] IndexesOf(this string s, char value)
         {
@@ -236,9 +254,13 @@ namespace Roblox.Common
             return indexes.ToArray();
         }
         public static string ParsedSubString(this string text, string startToken, string endToken, bool startWithLastOccurrences)
-            => text.ParsedSubString(startToken, endToken, false, false, startWithLastOccurrences);
+        {
+            return text.ParsedSubString(startToken, endToken, false, false, startWithLastOccurrences);
+        }
         public static string ParsedSubString(this string text, string startToken, string endToken)
-            => text.ParsedSubString(startToken, endToken, false, false, false);
+        {
+            return text.ParsedSubString(startToken, endToken, false, false, false);
+        }
         public static string ParsedSubString(this string text, string startToken, string endToken, bool includeStartToken, bool includeEndToken, bool startWithLastOccurrences)
         {
             int startIndex;
@@ -255,7 +277,9 @@ namespace Roblox.Common
             return text.Substring(0, length);
         }
         public static void GetRequestStreamAsync(this WebRequest webRequest, Action<Result<Stream>> resultHandler)
-            => Request<Stream>.HandleResponse(webRequest.BeginGetRequestStream, webRequest.EndGetRequestStream, resultHandler);
+        {
+            Request<Stream>.HandleResponse(webRequest.BeginGetRequestStream, webRequest.EndGetRequestStream, resultHandler);
+        }
         public static IAsyncResult BeginGetResponseStream(this WebResponse webResponse, AsyncCallback callback, object state)
         {
             var result = new FastAsyncResult<Stream>(callback, state);
@@ -273,7 +297,9 @@ namespace Roblox.Common
 				return result.GetResult();
 		}
 		public static void GetResponseStreamAsync(this WebResponse webResponse, Action<Result<Stream>> resultHandler)
-			=> Request<Stream>.HandleResponse(webResponse.BeginGetResponseStream, webResponse.EndGetResponseStream, resultHandler);
+		{
+			Request<Stream>.HandleResponse(webResponse.BeginGetResponseStream, webResponse.EndGetResponseStream, resultHandler);
+		}
 		public static IAsyncResult BeginLoad(this XmlDocument xmlDocument, Stream data, AsyncCallback callback, object state)
 		{
 			var result = new FastAsyncResult(callback, state);
@@ -302,7 +328,7 @@ namespace Roblox.Common
 				return CompletionSignal.Instance;
 			}, resultHandler);
 		}
-		public static string ToQuery(this string query) => query.ToQuery(QueryOperators.AND);
+		public static string ToQuery(this string query) { return query.ToQuery(QueryOperators.AND); }
 		public static string ToQuery(this string query, QueryOperators defaultOperator)
 		{
 			var op = string.Format(" {0} ", defaultOperator.ToString());

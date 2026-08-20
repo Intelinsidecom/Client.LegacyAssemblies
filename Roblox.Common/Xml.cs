@@ -10,8 +10,10 @@ namespace Roblox.Common
         protected abstract XmlWriterSettings XmlWriterSettings { get; }
 
         private bool IsLegalCharacter(int character)
-            => character == 9 || character == 10 || character == 13 || character >= 32 && character <= 55295 ||
+        {
+            return character == 9 || character == 10 || character == 13 || character >= 32 && character <= 55295 ||
                character >= 57344 && character <= 65533 || character >= 65536 && character <= 1114111;
+        }
 
         public string Sanitize(string xmlString)
         {
@@ -41,7 +43,7 @@ namespace Roblox.Common
     
     public class Xml : XmlBase
     {
-        protected override XmlWriterSettings XmlWriterSettings => _XmlWriterSettings;
+        protected override XmlWriterSettings XmlWriterSettings { get { return _XmlWriterSettings; } }
 
         private Xml() {}
 

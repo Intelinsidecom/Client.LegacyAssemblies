@@ -9,10 +9,12 @@ namespace Roblox
 {
     public class ObjectRegistry<TKey, TValue> : IDisposable, IEnumerable<KeyValuePair<TKey, TValue>>, IEnumerable
     {
-        public int Count => count;
+        public int Count { get { return count; } }
 
         private IDictionary<TKey, Reference> GetDictionary(TKey key)
-            => dictionaries[(int)checked((IntPtr)unchecked((ulong)key.GetHashCode() % (ulong)dictionaries.Length))];
+        {
+            return dictionaries[(int)checked((IntPtr)unchecked((ulong)key.GetHashCode() % (ulong)dictionaries.Length))];
+        }
 
         static ObjectRegistry()
         {
@@ -46,14 +48,14 @@ namespace Roblox
 
         private void IncrementPerfCountersForPurge(int magnitude)
         {
-            perfPurgeRate?.IncrementBy(magnitude);
-            perfItemCount?.IncrementBy(-1 * magnitude);
-            perfItemTotalPurged?.IncrementBy(magnitude);
+            if (perfPurgeRate != null) perfPurgeRate.IncrementBy(magnitude);
+            if (perfItemCount != null) perfItemCount.IncrementBy(-1 * magnitude);
+            if (perfItemTotalPurged != null) perfItemTotalPurged.IncrementBy(magnitude);
         }
 
         public void Add(TKey key, TValue value)
         {
-            perfItemCount?.Increment();
+            if (perfItemCount != null) perfItemCount.Increment();
             var dict = GetDictionary(key);
             lock (dict)
                 dict.Add(key, HasLease ? new LeasedReference(value, Lease) : new Reference(value));
@@ -136,7 +138,7 @@ namespace Roblox
 
         public void Remove(TKey key)
         {
-            perfItemCount?.Decrement();
+            if (perfItemCount != null) perfItemCount.Decrement();
             Interlocked.Decrement(ref count);
             var dict = GetDictionary(key);
             lock (dict) dict.Remove(key);
@@ -171,10 +173,10 @@ namespace Roblox
 
         public void Dispose()
         {
-            timer?.Dispose();
-            perfItemCount?.Dispose();
-            perfItemTotalPurged?.Dispose();
-            perfPurgeRate?.Dispose();
+            if (timer != null) timer.Dispose();
+            if (perfItemCount != null) perfItemCount.Dispose();
+            if (perfItemTotalPurged != null) perfItemTotalPurged.Dispose();
+            if (perfPurgeRate != null) perfPurgeRate.Dispose();
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
@@ -225,11 +227,11 @@ namespace Roblox
                 weakReference = new WeakReference(value);
             }
 
-            public virtual TValue Target => (TValue) weakReference.Target;
+            public virtual TValue Target { get { return (TValue) weakReference.Target; } }
 
-            public virtual bool IsAlive => weakReference.IsAlive;
+            public virtual bool IsAlive { get { return weakReference.IsAlive; } }
 
-            internal virtual void Renew(TValue value) => weakReference.Target = value;
+            internal virtual void Renew(TValue value) { weakReference.Target = value; }
 
             protected readonly WeakReference weakReference;
         }
@@ -246,7 +248,7 @@ namespace Roblox
                 }
             }
 
-            public override bool IsAlive => strongReference != null || base.IsAlive;
+            public override bool IsAlive { get { return strongReference != null || base.IsAlive; } }
 
             public LeasedReference(TValue value, TimeSpan Lease) : base(value)
             {

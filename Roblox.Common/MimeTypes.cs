@@ -8,7 +8,7 @@ namespace Roblox.Common
         {
             try
             {
-                var regKey = Registry.ClassesRoot.OpenSubKey($@"Mime\Database\Content Type\{mimeType}", false);
+                var regKey = Registry.ClassesRoot.OpenSubKey(@"Mime\Database\Content Type\" + mimeType, false);
                 if (regKey == null) return null;
 
                 var ext = regKey.GetValue("Extension") as string;

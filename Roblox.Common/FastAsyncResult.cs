@@ -46,13 +46,13 @@ namespace Roblox.Common
             if (_IsCompleted) _WaitHandle.Set();
             return _WaitHandle;
         }
-        public void Dispose() { _WaitHandle?.Close(); }
+        public void Dispose() { if (_WaitHandle != null) _WaitHandle.Close(); }
         public void SetCompleted()
         {
             _IsCompleted = true;
             Thread.MemoryBarrier();
-            _WaitHandle?.Set();
-            _Callback?.Invoke(this);
+            if (_WaitHandle != null) _WaitHandle.Set();
+            if (_Callback != null) _Callback.Invoke(this);
         }
         public void SetCompleted(Exception error)
         {

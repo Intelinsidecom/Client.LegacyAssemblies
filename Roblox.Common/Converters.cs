@@ -6,11 +6,15 @@ namespace Roblox.Common
     public static class Converters
     {
         public static string ConvertIntegersToCSV(int[] integers)
-            => string.Join(",", Array.ConvertAll(integers, ConvertIntegerToString));
-        private static string ConvertIntegerToString(int integer) => integer.ToString();
+        {
+            return string.Join(",", Array.ConvertAll(integers, ConvertIntegerToString));
+        }
+        private static string ConvertIntegerToString(int integer) { return integer.ToString(); }
         public static int[] ConvertCSVToIntegers(string[] strings) 
-            => Array.ConvertAll(strings, ConvertStringToInteger);
-        private static int ConvertStringToInteger(string s) => int.Parse(s);
+        {
+            return Array.ConvertAll(strings, ConvertStringToInteger);
+        }
+        private static int ConvertStringToInteger(string s) { return int.Parse(s); }
         public static List<T> EnumToList<T>()
         {
             var typeFromHandle = typeof(T);

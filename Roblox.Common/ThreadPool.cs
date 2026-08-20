@@ -84,17 +84,19 @@ namespace Roblox.Common
         }
         public void Dispose()
         {
-            _DispatcherQueue?.Dispose();
+            if (_DispatcherQueue != null) _DispatcherQueue.Dispose();
             _DispatcherQueue = null;
-            _Dispatcher?.Dispose();
+            if (_Dispatcher != null) _Dispatcher.Dispose();
             _Dispatcher = null;
         }
         public void QueueUserWorkItem(WaitCallback callback)
-            => QueueUserWorkItem(callback, null);
+        {
+            QueueUserWorkItem(callback, null);
+        }
         public void QueueUserWorkItem(WaitCallback callback, object state)
         {
             CheckDisposed();
-            if (callback == null) throw new ArgumentNullException(nameof(callback));
+            if (callback == null) throw new ArgumentNullException("callback");
             var item = new WaitQueueItem();
             item.Callback = callback;
             item.State = state;

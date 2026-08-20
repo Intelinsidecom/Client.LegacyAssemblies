@@ -25,9 +25,9 @@ namespace Roblox.Configuration
                 base[isDatabaseWritableProperty] = !value;
             }
         }
-        public GroupConfigElements GroupConfigs => (GroupConfigElements)base[groupConfigs];
-		public EndpointAddressElements EndpointAddressConfigs => (EndpointAddressElements)base[endpointAddressConfigs];
-		protected override ConfigurationPropertyCollection Properties => _Properties;
+        public GroupConfigElements GroupConfigs { get { return (GroupConfigElements)base[groupConfigs]; } }
+		public EndpointAddressElements EndpointAddressConfigs { get { return (EndpointAddressElements)base[endpointAddressConfigs]; } }
+		protected override ConfigurationPropertyCollection Properties { get { return _Properties; } }
 
 		private static readonly ConfigurationPropertyCollection _Properties = new ConfigurationPropertyCollection();
 		private static readonly ConfigurationProperty isDatabaseWritableProperty;

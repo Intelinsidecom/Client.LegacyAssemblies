@@ -32,12 +32,14 @@ namespace Roblox.Configuration
             }
         }
 
-        public override string Description => "Provides settings with a database, auto-update, etc.";
+        public override string Description { get { return "Provides settings with a database, auto-update, etc."; } }
 
         public static string GetDefaultConnectionString()
-            => (ConfigurationManager.GetSection("robloxConfigurationProvider") as ProviderConfigSection)
+        {
+            return (ConfigurationManager.GetSection("robloxConfigurationProvider") as ProviderConfigSection)
                .GroupConfigs["*"]
                .ConnectionString;
+        }
 
         public override void Initialize(string name, NameValueCollection config)
         {
@@ -121,13 +123,13 @@ namespace Roblox.Configuration
                                             where p.GroupName == groupName
                                             orderby p.ID
                                             select p;
-                foreach (var connectionString in connectionStringQuery)
+                foreach (var connString in connectionStringQuery)
                 {
                     SettingsPropertyValue value;
-                    if (!properties.TryGetValue(connectionString.Name, out value))
-                        Utilities.Log(EventLogEntryType.Warning, "Unknown connectionString from database: {0}:{1}", groupName, connectionString.Name);
+                    if (!properties.TryGetValue(connString.Name, out value))
+                        Utilities.Log(EventLogEntryType.Warning, "Unknown connectionString from database: {0}:{1}", groupName, connString.Name);
                     else
-                        value.SerializedValue = connectionString.Value;
+                        value.SerializedValue = connString.Value;
                 }
 
                 databaseHash = GetHash(settingQuery, connectionStringQuery);

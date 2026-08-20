@@ -56,7 +56,7 @@ namespace Roblox.Common
             }
         }
 
-        public void Dispose() => userLogs.Dispose();
+        public void Dispose() { userLogs.Dispose(); }
 
         private readonly ObjectRegistry<int, IDictionary<long, DateTime>> userLogs;
         private static readonly TimeSpan floodCheckInterval = TimeSpan.FromHours(1);

@@ -18,7 +18,9 @@ namespace Roblox.Common
             array[j] = d;
         }
         public static IEnumerable<T> RandomizeCollection<T>(this ICollection<T> collection, int numberofItemsToReturn)
-            => collection.RandomizeCollection(numberofItemsToReturn, _ => true);
+        {
+            return collection.RandomizeCollection(numberofItemsToReturn, _ => true);
+        }
         public static IEnumerable<T> RandomizeCollection<T>(this ICollection<T> collection, int numberofItemsToReturn, Func<T, bool> predicate)
         {
             var count = collection.Count;

@@ -45,7 +45,7 @@ namespace Roblox.Configuration
         private Uri GetUriFromConfig(string endpointConfigurationName)
         {
             if (string.IsNullOrEmpty(endpointConfigurationName))
-                throw new ArgumentNullException(nameof(endpointConfigurationName));
+                throw new ArgumentNullException("endpointConfigurationName");
 
             var section = ConfigurationManager.GetSection("robloxConfigurationProvider") as ProviderConfigSection;
             if (section == null)

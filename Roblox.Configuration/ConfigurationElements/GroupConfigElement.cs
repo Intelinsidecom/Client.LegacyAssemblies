@@ -48,7 +48,7 @@ namespace Roblox.Configuration
                 base[updateIntervalProperty] = value;
             }
         }
-        protected override ConfigurationPropertyCollection Properties => properties;
+        protected override ConfigurationPropertyCollection Properties { get { return properties; } }
 
         private static readonly ConfigurationPropertyCollection properties = new ConfigurationPropertyCollection();
         private static readonly ConfigurationProperty groupNameProperty;

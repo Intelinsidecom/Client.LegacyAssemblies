@@ -10,7 +10,9 @@ namespace Roblox
         public static int QueueLength { get { return _QueueLength; } }
 
         public static void GetAvailableThreads(out int workerThreads, out int completionPortThreads)
-            => ThreadPool.GetAvailableThreads(out workerThreads, out completionPortThreads);
+        {
+            ThreadPool.GetAvailableThreads(out workerThreads, out completionPortThreads);
+        }
         
         public static bool QueueUserWorkItem(Action callback)
         {

@@ -59,7 +59,7 @@ namespace Roblox.Common
             try
             {
                 if (Interlocked.Increment(ref _count) == 1) _callback(state);
-                else _skipExecutionCallback?.Invoke(state);
+                else if (_skipExecutionCallback != null) _skipExecutionCallback.Invoke(state);
             }
             finally
             {
@@ -72,7 +72,7 @@ namespace Roblox.Common
         }
         public void Dispose()
         {
-            _timer?.Dispose();
+            if (_timer != null) _timer.Dispose();
         }
     }
 }

@@ -40,11 +40,11 @@ namespace Roblox.Common
             try
             {
                 if (_Exception != null) throw _Exception;
-                successHandler?.Invoke(_Value);
+                if (successHandler != null) successHandler.Invoke(_Value);
             }
             catch (Exception ex)
             {
-                failureHandler?.Invoke(ex);
+                if (failureHandler != null) failureHandler.Invoke(ex);
             }
         }
 
@@ -53,15 +53,15 @@ namespace Roblox.Common
             try
             {
                 if (_Exception != null) throw _Exception;
-                successHandler?.Invoke(_Value);
+                if (successHandler != null) successHandler.Invoke(_Value);
             }
             catch (Exception ex)
             {
-                failureHandler?.Invoke(ex);
+                if (failureHandler != null) failureHandler.Invoke(ex);
             }
             finally
             {
-                cleanupHandler?.Invoke();
+                if (cleanupHandler != null) cleanupHandler.Invoke();
             }
         }
 
@@ -130,7 +130,7 @@ namespace Roblox.Common
         public void SetCompleted()
         {
             _IsCompleted = true;
-            _Callback?.Invoke(this);
+            if (_Callback != null) _Callback.Invoke(this);
         }
         public void SetCompleted(Exception error)
         {

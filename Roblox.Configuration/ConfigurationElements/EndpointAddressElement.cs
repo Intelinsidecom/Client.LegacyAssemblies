@@ -34,7 +34,7 @@ namespace Roblox.Configuration
                 base[connectionStringProperty] = value;
             }
         }
-        protected override ConfigurationPropertyCollection Properties => properties;
+        protected override ConfigurationPropertyCollection Properties { get { return properties; } }
 
         private static readonly ConfigurationPropertyCollection properties = new ConfigurationPropertyCollection();
 		private static readonly ConfigurationProperty nameProperty;

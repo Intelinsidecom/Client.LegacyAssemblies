@@ -70,7 +70,9 @@ namespace Roblox.Ccr
         public void Dispose() {}
 
         public void Init(HttpApplication application)
-            => application.AddOnPreRequestHandlerExecuteAsync(BeginPreRequestHandlerExecute,
+        {
+            application.AddOnPreRequestHandlerExecuteAsync(BeginPreRequestHandlerExecute,
                 EndPreRequestHandlerExecute);
+        }
     }
 }

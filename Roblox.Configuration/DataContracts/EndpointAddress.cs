@@ -19,7 +19,7 @@ namespace Roblox.Configuration
                 {
                     SendPropertyChanging();
                     _ID = value;
-                    SendPropertyChanged(nameof(ID));
+                    SendPropertyChanged("ID");
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace Roblox.Configuration
                 {
                     SendPropertyChanging();
                     _EndpointConfigurationName = value;
-                    SendPropertyChanged(nameof(EndpointConfigurationName));
+                    SendPropertyChanged("EndpointConfigurationName");
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace Roblox.Configuration
                 {
                     SendPropertyChanging();
                     _Uri = value;
-                    SendPropertyChanged(nameof(Uri));
+                    SendPropertyChanged("Uri");
                 }
             }
         }
@@ -68,8 +68,8 @@ namespace Roblox.Configuration
         public event PropertyChangingEventHandler PropertyChanging;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void SendPropertyChanging() => PropertyChanging?.Invoke(this, emptyChangingEventArgs);
-        protected virtual void SendPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void SendPropertyChanging() { if (PropertyChanging != null) PropertyChanging.Invoke(this, emptyChangingEventArgs); }
+        protected virtual void SendPropertyChanged(string propertyName) { if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
 
     }
 }

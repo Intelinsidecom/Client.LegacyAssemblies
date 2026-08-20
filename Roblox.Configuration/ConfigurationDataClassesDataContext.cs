@@ -25,9 +25,9 @@ namespace Roblox.Configuration
             : base(connection, mappingSource)
         {}
 
-        public Table<PopulatedGroup> PopulatedGroups => GetTable<PopulatedGroup>();
-        public Table<Setting> Settings => GetTable<Setting>();
-        public Table<ConnectionString> ConnectionStrings => GetTable<ConnectionString>();
-        public Table<EndpointAddress> EndpointAddresses => GetTable<EndpointAddress>();
+        public Table<PopulatedGroup> PopulatedGroups { get { return GetTable<PopulatedGroup>(); } }
+        public Table<Setting> Settings { get { return GetTable<Setting>(); } }
+        public Table<ConnectionString> ConnectionStrings { get { return GetTable<ConnectionString>(); } }
+        public Table<EndpointAddress> EndpointAddresses { get { return GetTable<EndpointAddress>(); } }
     }
 }

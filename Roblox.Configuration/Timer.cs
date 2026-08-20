@@ -31,11 +31,11 @@ namespace Roblox
 
         ~SelfDisposingTimer()
         {
-            timer?.Dispose();
+            if (timer != null) timer.Dispose();
         }
 
-        internal void Pause() => timer.Change(-1, -1);
-        internal void Unpause() => timer.Change(period, period);
+        internal void Pause() { timer.Change(-1, -1); }
+        internal void Unpause() { timer.Change(period, period); }
 
         private readonly Action action;
         private Timer timer;

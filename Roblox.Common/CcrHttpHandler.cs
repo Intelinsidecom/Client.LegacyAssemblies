@@ -19,7 +19,7 @@ namespace Roblox.Ccr
 
         protected abstract IEnumerator<ITask> Execute(HttpContext context);
 
-        protected virtual bool SynchronousExecute(HttpContext context) => false;
+        protected virtual bool SynchronousExecute(HttpContext context) { return false; }
 
         private IEnumerator<ITask> ExecuteAndComplete(HttpContext context, FastAsyncResult result)
         {
